@@ -5,6 +5,9 @@ npm-debug.log
 yarn-error.log
 package-lock.json
 webpack.config.js
+.editorconfig
+.babelrc
+vue-pc-table.js.map
 
 # Editor directories and files
 .idea

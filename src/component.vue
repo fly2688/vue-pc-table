@@ -30,7 +30,7 @@
 <script>
   export default {
     name: 'Vue-table',
-    props: ['titles', 'datas', 'isCheck', 'loadTxt', 'checkId', 'tbodyId'],
+    props: ['titles', 'datas', 'isCheck', 'loadTxt', 'checkId', 'tbodyId', 'maxHeight'],
     data () {
       return {
         hasCheck: false,
@@ -41,7 +41,8 @@
         cId: 'quan',
         checkVal: [],
         hasScrollBar: false,
-        bodyId: 'tbodyId'
+        bodyId: 'tbodyId',
+        wHeight: null
       }
     },
     created () { // 视图被创建
@@ -54,6 +55,7 @@
         this.tableTitles = this.titles || [];
         this.cId = this.checkId || 'quan';
         this.bodyId = this.tbodyId || 'tbodyId';
+        this.changeTableHeight();
       },
       allCheck (e) {
         this.selectedItems = [];
@@ -66,9 +68,9 @@
       },
       changeTableHeight () {
         let self = this;
-        let val = self.wHeight;
+        let tmp = self.wHeight - 280;
+        if (Number(self.maxHeight) !== NaN) tmp = self.maxHeight - 46;
         this.$nextTick(() => {
-          let tmp = val - 280;
           if (self.$refs[self.bodyId].scrollHeight > tmp) {
             self.$refs[self.bodyId].style.height = tmp + 'px';
             self.hasScrollBar = true;
@@ -100,13 +102,17 @@
         }
         this.$emit('onChange', val);
       },
+      maxHeight () {
+        this.changeTableHeight();
+      },
       wHeight () {
         this.changeTableHeight();
       }
     },
-    computed: {
-      wHeight () {
-        return window.innerHeight;
+    mounted () {
+      let self = this;
+      window.onresize = () => {
+        self.wHeight = window.innerHeight;
       }
     }
   }
