@@ -45,7 +45,7 @@ export default {
   }
 }
 ```
-
+![image](https://github.com/fly2688/vue-pc-table/blob/master/src/xiaoguotu.jpg)
 ## Api
 
 | Options         | Type     | Description                 | Default | necessary |
