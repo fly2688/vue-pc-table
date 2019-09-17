@@ -8,6 +8,7 @@ webpack.config.js
 .editorconfig
 .babelrc
 vue-pc-table.js.map
+index.html
 
 # Editor directories and files
 .idea

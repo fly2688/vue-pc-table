@@ -3,18 +3,20 @@
     <table class="autoWidth" :class="{'table-scroll': hasScrollBar}" cellpadding="0" cellspacing="0">
       <thead ref='thd'>
         <tr>
-          <th :class="{shortWidth: index===0 && hasCheck, floatBar: index === tableTitles.length - 1 && hasScrollBar}" v-for="(item, index) in tableTitles">
-            {{ item }}
-            <section class="checkbox" v-if="index === 0 && hasCheck && dataList.length > 1">
+          <th class="shortWidth" v-if="hasChecks && dataList.length > 1">
+            <section class="checkbox" >
                 <input @click="allCheck" :id="cId" type="checkbox" v-model="checkVal" :value="cId" />
                 <label :for="cId"></label>
             </section>
+          </th>
+          <th :class="{floatBar: index === tableTitles.length - 1 && hasScrollBar}" v-for="(item, index) in tableTitles">
+            {{ item }}
           </th>
         </tr>
       </thead>
       <tbody :ref='bodyId'>
         <tr v-for="(item, i) in dataList">
-          <td v-if="hasCheck" class="shortWidth">
+          <td v-if="hasChecks" class="shortWidth">
               <section class="checkbox">
                 <input :id="'slOne_' + item.id" type="checkbox" :value="item.id" v-model="selectedItems"/>
                 <label :for="'slOne_' + item.id"></label>
@@ -30,10 +32,10 @@
 <script>
   export default {
     name: 'Vue-table',
-    props: ['titles', 'datas', 'isCheck', 'loadTxt', 'checkId', 'tbodyId', 'maxHeight'],
+    props: ['titles', 'datas', 'hasCheck', 'loadTxt', 'checkId', 'tbodyId', 'maxHeight'],
     data () {
       return {
-        hasCheck: false,
+        hasChecks: false,
         hasScroll: false,
         dataList: [],
         tableTitles: [],
@@ -51,7 +53,7 @@
     methods: {
       setOptions () {
         this.dataList = this.datas || [];
-        this.hasCheck = this.isCheck || false;
+        this.hasChecks = this.hasCheck || false;
         this.tableTitles = this.titles || [];
         this.cId = this.checkId || 'quan';
         this.bodyId = this.tbodyId || 'tbodyId';
@@ -91,8 +93,8 @@
       titles () {
         this.tableTitles = this.datas || [];
       },
-      isCheck (val) {
-        this.hasCheck = val || false;
+      hasCheck (val) {
+        this.hasChecks = val || false;
       },
       selectedItems (val) {
         if (val.length === this.dataList.length && val.length > 1) {
