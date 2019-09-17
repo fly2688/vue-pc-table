@@ -1,6 +1,6 @@
 <template>
   <section class="ui-table-layout tableWrap rel inline-block pd10">
-    <table class="autoWidth" :class="{'table-scroll': hasScrollBar}" cellpadding="0" cellspacing="0">
+    <table class="autoWidth table" :class="{'table-scroll': hasScrollBar}" cellpadding="0" cellspacing="0">
       <thead ref='thd'>
         <tr>
           <th class="shortWidth" v-if="hasChecks && dataList.length > 1">
@@ -140,11 +140,8 @@ section{
   table.autoWidth{
     min-width: auto;
   }
-  tbody tr{
+  tr{
       overflow: hidden;
-  }
-  thead.hide{
-    display: none;
   }
   th{
       border: 1px solid #dfe6ec;
